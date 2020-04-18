@@ -3,7 +3,7 @@
 //
 //
 // This class collects information at three different levels: 
-// 1 - Energy deposited in the sensitive volume (LaBr3 crystal)
+// 1 - Energy deposited in the sensitive volume
 // 2 - Number of photons absorbed by the photocathode (or just generated!)
 // 3 - Time at which each photon is absorbed
 //

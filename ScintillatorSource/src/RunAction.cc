@@ -42,11 +42,19 @@ RunAction::RunAction() : G4UserRunAction()
 	  //                 const G4String& fcnName = "none",
 	  //                 const G4String& binSchemeName = "linear");
 
+<<<<<<< HEAD:src/RunAction.cc
 	  xmin = 0; // in MeV
 	  xmax = 50.;// in MeV
 	  binsize = 3; // in MeV
 	  nbins= (int)((xmax-xmin)/binsize);
 	  analysisManager->CreateH1("Histo1","Edep in Crystal", nbins, xmin*MeV, xmax*MeV);
+=======
+	  xmin = 0; // in keV
+	  xmax = 40000.;// in keV
+	  binsize = 3; // in keV
+	  nbins= (int)((xmax-xmin)/binsize);
+	  analysisManager->CreateH1("Histo1","Edep in Crystal", nbins, xmin*eV, xmax*eV);
+>>>>>>> 39164470204c0f6c080055c6c39470eb6925a096:ScintillatorSource/src/RunAction.cc
 
 	  xmin = 0; //
 	  xmax = 2e3; //
