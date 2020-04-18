@@ -42,11 +42,11 @@ RunAction::RunAction() : G4UserRunAction()
 	  //                 const G4String& fcnName = "none",
 	  //                 const G4String& binSchemeName = "linear");
 
-	  xmin = 0; // in keV
-	  xmax = 400.;// in keV
-	  binsize = 3; // in keV
+	  xmin = 0; // in MeV
+	  xmax = 50.;// in MeV
+	  binsize = 3; // in MeV
 	  nbins= (int)((xmax-xmin)/binsize);
-	  analysisManager->CreateH1("Histo1","Edep in Crystal", nbins, xmin*keV, xmax*keV);
+	  analysisManager->CreateH1("Histo1","Edep in Crystal", nbins, xmin*MeV, xmax*MeV);
 
 	  xmin = 0; //
 	  xmax = 2e3; //

@@ -7,6 +7,7 @@
 #include "G4Element.hh"
 #include "G4ElementTable.hh"
 #include "G4Box.hh"
+#include "G4Sphere.hh"
 #include "G4Tubs.hh"
 #include "G4Polycone.hh"
 #include "G4LogicalVolume.hh"
@@ -14,6 +15,11 @@
 #include "G4PVPlacement.hh"
 #include "G4VisAttributes.hh"
 #include "G4NistManager.hh"
+#include "G4RotationMatrix.hh"
+#include "G4Transform3D.hh"
+#include "G4SystemOfUnits.hh"
+#include "CLHEP/Vector/Rotation.h"
+#include "CLHEP/Vector/Rotation.h"
 
 #include "G4LogicalBorderSurface.hh"
 #include "G4OpticalSurface.hh"
@@ -36,11 +42,22 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	//----------------------------------------------------
 
 	G4String name, symbol;             //a=mass of a mole;
-	G4double a, z, density;            //z=mean number of protons;
-
-	G4int ncomponents, natoms;
-
-	G4Material* Air= nist->FindOrBuildMaterial("G4_AIR");
+	G4double a, z, density;            //z=mean number of protons;  
+		
+	G4int ncomponents, natoms;         
+		
+	G4double pressure    = 3.e-18*pascal;
+	G4double temperature = 2.73*kelvin;
+	density     = 1.e-25*g/cm3;
+		
+	G4Material* Air = new G4Material(name="Galactic", z=1., a=1.01*g/mole, 
+											density,kStateGas,temperature,pressure);
+//	G4String name, symbol;             //a=mass of a mole;
+//	G4double density;            //z=mean number of protons;
+//
+//	G4int ncomponents;
+//
+//	G4Material* Air= nist->FindOrBuildMaterial("G4_AIR");
 
 	//-----------------------------------------------------
 	// Define Simple Elements
@@ -60,8 +77,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	//-----------------------------------------------------
 	density = 1.023*g/cm3;
 	G4Material* BC408 = new G4Material(name="BC408", density, ncomponents = 2);
-	BC408->AddMaterial(H, 51.3*perCent);
-	BC408->AddMaterial(C, 48.7*perCent);
+	BC408->AddMaterial(H, 8.4*perCent);
+	BC408->AddMaterial(C, 91.6*perCent); //derived from the ratio of H to C on Gobain Crystals Datasheet
 
 
 
@@ -70,7 +87,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	//------------------------------------------------------
 
 	G4double photonEnergy[] = {2.72*eV, 2.75*eV, 2.78*eV, 2.82*eV, 2.84*eV,
-			                   2.88*eV, 2.92*eV, 2.95*eV, 2.98*eV, 3.02*eV};
+			                   2.88*eV, 2.92*eV, 2.95*eV, 2.98*eV, 3.02*eV}; //derived from 
 
 	const G4int nEntries = sizeof(photonEnergy)/sizeof(G4double);  //divide by size of data type to get the size of the actual list in bytes
 
@@ -121,10 +138,20 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	// World
 	//
 
-	G4double WorldSize= 80.*cm;
+	G4double WorldSize= 5.*m;
+	
+	G4Box* solidWorld = new G4Box("World",
+								  WorldSize,
+								  WorldSize,
+								  WorldSize);
 
-	G4Box* solidWorld = new G4Box("World",		       	                  //its name
-							   WorldSize/2,WorldSize/2,WorldSize/2);  //its size
+//	G4Sphere* solidWorld = new G4Sphere("World",		       	                  //its name
+//							   	   	  WorldSize,
+//									  WorldSize + 3,
+//									  0.*deg,
+//									  180.*deg,
+//									  0.*deg,
+//									  180.*deg);  //its size
 
 	G4LogicalVolume* logicWorld = new G4LogicalVolume(solidWorld,      	//its solid
 										 Air,	        //its material
@@ -142,8 +169,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	// Detector
 	//
 
-	G4double ScintHalfLength = 25.*cm;
-	G4double ScintHalfHeight = 6.5*cm;
+	G4double ScintHalfLength = 25.*mm;
+	G4double ScintHalfHeight = 6.5*mm;
 
 	G4Box* solidScintillator = new G4Box("Scintillator", ScintHalfLength,
 			                         ScintHalfLength, ScintHalfHeight);
@@ -153,14 +180,31 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 															 "Scintillator");
 
 	G4ThreeVector positionScintillator = G4ThreeVector(0.*cm,0.*cm,0.*cm);
-
-	G4VPhysicalVolume* physScintillator = new G4PVPlacement(0,                      //no rotation
-			                                                positionScintillator,   //position in world
-															logicScintillator,      //logical volume
-															"Scintillator",         //its name
-															logicWorld,             //its mother (logical) volume
-															false,                  //no boolean operations
-															0);                     //its copy number
+	
+	G4RotationMatrix rotm = G4RotationMatrix();
+	rotm.rotateX(90*deg);
+	G4ThreeVector translation = G4ThreeVector(0., 0., 0.);
+	G4Transform3D transform = G4Transform3D(rotm, translation);
+	
+//	G4RotationMatrix* RotMat = G4RotationMatrix(90. ,90. ,90. ,0. ,180. , 90.);
+	
+	//G4VPhysicalVolume* physScintillator = 
+//	new G4PVPlacement(RotMat,                      //no rotation
+//			                                                positionScintillator,   //position in world
+//	  													    logicScintillator,      //logical volume
+//															"Scintillator",         //its name
+//															logicWorld,             //its mother (logical) volume
+//															false,                  //no boolean operations
+//															0);                     //its copy number
+	
+    new G4PVPlacement(transform,             //rotation,position
+                      logicScintillator,            //its logical volume
+                      "Scintillator",             //its name
+                      logicWorld,             //its mother  volume
+                      false,                 //no boolean operation
+                      0,                 //copy number
+                      0);       // checking overlaps 
+	
 
 
 	//------------------------------------------------------
