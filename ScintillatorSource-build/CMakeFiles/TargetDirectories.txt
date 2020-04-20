@@ -1,0 +1,7 @@
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource-build/CMakeFiles/install/strip.dir
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource-build/CMakeFiles/edit_cache.dir
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource-build/CMakeFiles/main.dir
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource-build/CMakeFiles/rebuild_cache.dir
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource-build/CMakeFiles/list_install_components.dir
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource-build/CMakeFiles/install/local.dir
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource-build/CMakeFiles/install.dir

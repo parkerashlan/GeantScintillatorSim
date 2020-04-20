@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////Geant4
 //
 // Apr/2015  E. Nacher -> PhysicsList.cc
 //
@@ -31,7 +31,7 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList()
 	G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
 	RegisterPhysics(opticalPhysics);
 	
-	opticalPhysics->SetScintillationYieldFactor(0.08);
+	opticalPhysics->SetScintillationYieldFactor(1.);
 	opticalPhysics->SetScintillationExcitationRatio(0.);
 	
 	opticalPhysics->SetTrackSecondariesFirst(kScintillation,true);

@@ -27,6 +27,9 @@ class EventAction : public G4UserEventAction
     void accumulateEnergy(G4double);
 
     G4int        nAbsPhotons;
+
+    G4int        nSiPMPhotons;
+
     //G4double     totEnergyDep;
     G4double     absTime;
     //G4double     totEnergyDepCathod;

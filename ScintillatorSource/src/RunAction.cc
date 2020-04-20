@@ -6,6 +6,7 @@
 
 #include "RunAction.hh"
 #include "Analysis.hh"
+#include "EventAction.hh"
 
 #include "G4RunManager.hh"
 #include "G4UnitsTable.hh"
@@ -42,38 +43,37 @@ RunAction::RunAction() : G4UserRunAction()
 	  //                 const G4String& fcnName = "none",
 	  //                 const G4String& binSchemeName = "linear");
 
-<<<<<<< HEAD:src/RunAction.cc
+
 	  xmin = 0; // in MeV
-	  xmax = 50.;// in MeV
-	  binsize = 3; // in MeV
-	  nbins= (int)((xmax-xmin)/binsize);
-	  analysisManager->CreateH1("Histo1","Edep in Crystal", nbins, xmin*MeV, xmax*MeV);
-=======
-	  xmin = 0; // in keV
-	  xmax = 40000.;// in keV
-	  binsize = 3; // in keV
-	  nbins= (int)((xmax-xmin)/binsize);
-	  analysisManager->CreateH1("Histo1","Edep in Crystal", nbins, xmin*eV, xmax*eV);
->>>>>>> 39164470204c0f6c080055c6c39470eb6925a096:ScintillatorSource/src/RunAction.cc
+	  xmax = 12.;// in MeV
+	  binsize = .1; // in MeV
+	  nbins= (double)((xmax-xmin)/binsize);
+	  analysisManager->CreateH1("H1","Edep in Crystal", nbins, xmin*MeV, xmax*MeV);
 
 	  xmin = 0; //
 	  xmax = 2e3; //
 	  binsize = 2; //
 	  nbins= (int)(xmax-xmin)/binsize;
-          analysisManager->CreateH1("Histo2","Absorbed Photons", nbins, xmin, xmax);
+      analysisManager->CreateH1("H2","nAbsorbed Photons", nbins, xmin, xmax);
 
       // Here we need some units!
       xmin = 0; // in ns
 	  xmax = 500; // in ns
 	  binsize = 2; // in ns
 	  nbins= (int)(xmax-xmin)/binsize;
-          analysisManager->CreateH1("Histo3","Time of Absorption", nbins, xmin, xmax*ns);
+          analysisManager->CreateH1("H3","Time of Absorption", nbins, xmin*ns, xmax*ns);
 
       xmin = 0; // in keV
 	  xmax = 12e3; // in keV
 	  binsize = 2; // in keV
 	  nbins= (int)((xmax-xmin)/binsize);
-	  analysisManager->CreateH1("Histo4","Energy of Primary Particles", nbins, xmin*keV, xmax*keV);
+	  analysisManager->CreateH1("H4","Primary Energy of Particles", nbins, xmin*MeV, xmax*MeV);
+
+	  xmin = 0; //
+	  xmax = 18; //
+	  binsize = 1; //
+	  nbins= (int)(xmax-xmin)/binsize;
+      analysisManager->CreateH1("H4","SiPM Absorbed Photons", nbins, xmin, xmax);
 
 	  // Creating ntuple
 	  //
@@ -82,6 +82,7 @@ RunAction::RunAction() : G4UserRunAction()
 	  analysisManager->CreateNtupleDColumn("nAbsPhotons");
 	  analysisManager->CreateNtupleDColumn("absTime");
 	  analysisManager->CreateNtupleDColumn("EPrimaries");
+	  analysisManager->CreateNtupleDColumn("nSiPMPhotons");
 	  analysisManager->FinishNtuple();
 
 }
@@ -110,7 +111,7 @@ void RunAction::EndOfRunAction(const G4Run*)
 	  // print histogram statistics
 	  //
 	  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
-	  if ( analysisManager->GetH1(1) ) {
+	  if ( analysisManager->GetH1(0) ) {
 	    G4cout << G4endl << " ----> print histograms statistic ";
 	    if(isMaster) {
 	      G4cout << "for the entire run " << G4endl << G4endl;
@@ -119,12 +120,16 @@ void RunAction::EndOfRunAction(const G4Run*)
 	      G4cout << "for the local thread " << G4endl << G4endl;
 	    }
 
-	    G4cout << G4endl << " EAbs : mean = "
-	       << G4BestUnit(analysisManager->GetH1(1)->mean(), "Energy")
+	    G4cout << G4endl << " EDep : mean = "
+	       << G4BestUnit(analysisManager->GetH1(0)->mean(), "Energy")
 	       << " rms = "
-	       << G4BestUnit(analysisManager->GetH1(1)->rms(),  "Energy") << G4endl;
+	       << G4BestUnit(analysisManager->GetH1(0)->rms(),  "Energy") << G4endl;
+
+
 
 	  }
+//	  G4cout << G4endl << "Total Photon Count: " << EventAction::nAbsPhotons <<
+//	    	 << "SiPM Photon Count: " << EventAction::nSiPMPhotons << G4endl;
 
 	  // save histograms & ntuple
 	  //

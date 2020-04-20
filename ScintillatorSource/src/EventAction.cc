@@ -32,6 +32,7 @@ void EventAction::BeginOfEventAction(const G4Event*)
 	// initialisation per event
 	EdepInCrystal = 0.;
 	nAbsPhotons = 0.;
+	nSiPMPhotons = 0.;
 	absTime = 0.;
 
     // Get energy of the primary particles (created with GPS)
@@ -59,12 +60,14 @@ void EventAction::EndOfEventAction(const G4Event* evt)
 	  analysisManager->FillH1(1, nAbsPhotons);
 	  analysisManager->FillH1(2, absTime);
 	  analysisManager->FillH1(3, k_primary);
+	  analysisManager->FillH1(4, nSiPMPhotons);
 
 	  // fill ntuple
 	  analysisManager->FillNtupleDColumn(0, EdepInCrystal);
 	  analysisManager->FillNtupleDColumn(1, nAbsPhotons);
 	  analysisManager->FillNtupleDColumn(2, absTime);
 	  analysisManager->FillNtupleDColumn(3, k_primary);
+	  analysisManager->FillNtupleDColumn(4, nSiPMPhotons);
 	  analysisManager->AddNtupleRow();
 
   // Print per event (modulo n)
