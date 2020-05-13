@@ -3,6 +3,7 @@
 #include "DetectorConstruction.hh"
 
 #include "G4Material.hh"
+#include "G4SubtractionSolid.hh"
 #include "G4MaterialTable.hh"
 #include "G4Element.hh"
 #include "G4ElementTable.hh"
@@ -23,6 +24,7 @@
 
 #include "G4LogicalBorderSurface.hh"
 #include "G4OpticalSurface.hh"
+#include "G4LogicalSkinSurface.hh"
 
 using namespace CLHEP;
 
@@ -59,7 +61,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4Material* C = nist->FindOrBuildMaterial("G4_C");
 
 	//----------------------------------------------------
-	// Define SiPM material?
+	// Define SiPM material
 	//----------------------------------------------------
 
 	//Silicon
@@ -73,6 +75,12 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4Material* BC408 = new G4Material(name="BC408", density, ncomponents = 2);
 	BC408->AddMaterial(H, 8.4*perCent);
 	BC408->AddMaterial(C, 91.6*perCent); //derived from the ratio of H to C on Gobain Crystals Datasheet
+
+	//-----------------------------------------------------
+	// Define Wrapping for Scintillator
+	//-----------------------------------------------------
+
+	G4Material *Teflon = nist->FindOrBuildMaterial("G4_TEFLON");
 
 
 
@@ -138,6 +146,20 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	siMPT->AddProperty("ABSLENGTH", photonEnergy, SiAbsorptionLength, nEntries);
 
 	Silicon->SetMaterialPropertiesTable(siMPT);
+
+	//Wrapper
+	G4double TefRefractionIndex[nEntries] = {1.32,1.32,1.32,1.32,1.32,
+			 	 	 	 	 	 	 	 	 1.32,1.32,1.32,1.32,1.32};
+
+	G4double TefAbsorptionLength[nEntries] = {94*cm, 94*cm, 94*cm, 94*cm, 94*cm,
+											 94*cm, 94*cm, 94*cm, 94*cm, 94*cm};
+
+	G4MaterialPropertiesTable* TefMPT = new G4MaterialPropertiesTable();
+
+	TefMPT->AddProperty("RINDEX", photonEnergy, TefRefractionIndex, nEntries);
+	TefMPT->AddProperty("ABSLENGTH", photonEnergy, TefAbsorptionLength, nEntries);
+
+	Teflon->SetMaterialPropertiesTable(TefMPT);
 	//----------------------------------------------------
 	//Detector Geometry
 	//----------------------------------------------------
@@ -183,11 +205,11 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4ThreeVector translation = G4ThreeVector(0., 0., 0.);
 	G4Transform3D transform = G4Transform3D(rotm, translation);
 	
-//    G4VPhysicalVolume* physScint = new G4PVPlacement(0.,
+//    G4VPhysicalVolume* physScint = new G4PVPlacement(0,
 //    		                                        positionScintillator,
 //													"Scintillator",
 //													logicScintillator,
-//													NULL,
+//													physWorld,
 //													false,
 //													0);
 
@@ -201,26 +223,65 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     // SiPM Detector
 
-//    G4double SiPMHalfLength = 0.5*mm;
-//    G4double SiPMHalfHeight = 0.5*mm;
 
-    G4double SiPMHalfLength = 0.5*mm;
+    G4double SiPMHalfLength = 3*mm;
     G4double SiPMHalfHeight = 0.5*mm;
 
     G4Box* solidSiPM = new G4Box("SiPM", SiPMHalfLength, SiPMHalfLength, SiPMHalfHeight);
 
     G4LogicalVolume* logicSiPM = new G4LogicalVolume(solidSiPM, Silicon, "SiPM");
 
-    G4ThreeVector positionSiPM = G4ThreeVector(26.*mm, 0.*mm, 15.*mm);
+    G4ThreeVector positionSiPM = G4ThreeVector(25.3*mm, 0.*mm, 15.*mm);
 
 
-    G4VPhysicalVolume* physSiPM = new G4PVPlacement(0,
-    		                                        positionSiPM,
-													"SiPM",
-													logicSiPM,
-													physWorld,
-													false,
-													0);
+//    G4VPhysicalVolume* physSiPM = new G4PVPlacement(0,
+//    		                                        positionSiPM,
+//													"SiPM",
+//													logicSiPM,
+//													physWorld,
+//													false,
+//													0);
+    G4RotationMatrix rotmSiPM = G4RotationMatrix();
+
+    rotmSiPM.rotateY(90.*deg);
+
+    G4ThreeVector translateSiPM = G4ThreeVector(25.3*mm, 0.*mm, 15.*mm);
+
+    G4Transform3D transformSiPM = G4Transform3D(rotmSiPM, translateSiPM);
+
+    G4VPhysicalVolume* physSiPM = new G4PVPlacement(transformSiPM,             //rotation,position
+                      	  	  	  	  	  	         logicSiPM,            //its logical volume
+													 "SiPM",             //its name
+													 logicWorld,             //its mother  volume
+													 false,                 //no boolean operation
+													 0,                 //copy number
+													 0);       // checking overlaps
+
+    // Wrapper
+
+    G4double wrapperhalflength = 30.*mm;
+    G4double wrapperheight = 11.5*mm;
+
+    G4Box* outerWrapper = new G4Box("innerWrapper", wrapperhalflength, wrapperhalflength, wrapperheight);
+    G4Box* innerWrapper = new G4Box("outerWrapper", ScintHalfLength+0.01*mm, ScintHalfLength+0.01*mm, ScintHalfHeight+0.01*mm);
+    G4SubtractionSolid* WrappernoCav = new G4SubtractionSolid("WrapperNoCav", outerWrapper, innerWrapper);
+
+    G4double lenCavity = 1.5*mm;
+    G4ThreeVector tranCavity = G4ThreeVector(26.*mm, 15.*mm, 0.*mm);
+
+    G4Box* SiPMCavity = new G4Box("SiPMCavity", lenCavity, 4.*mm, ScintHalfHeight-2);
+    G4SubtractionSolid* solidWrapper = new G4SubtractionSolid("Wrapper", WrappernoCav, SiPMCavity, 0, tranCavity);
+
+    G4LogicalVolume* logicWrapper = new G4LogicalVolume(solidWrapper, Teflon, "Wrapper");
+
+    G4VPhysicalVolume* physWrapper = new G4PVPlacement(transform,             //rotation,position
+                      	  	  	  	  	  	         logicWrapper,            //its logical volume
+													 "Wrapper",             //its name
+													 logicWorld,             //its mother  volume
+													 false,                 //no boolean operation
+													 0,                 //copy number
+													 0);       // checking overlaps
+
 	
 
 
@@ -229,7 +290,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	//------------------------------------------------------
 
 	// Air - scintillator surface
-
+//
 //	G4OpticalSurface* AirScintSurface =
 //	new G4OpticalSurface("AirScintSurface");
 //
@@ -237,12 +298,19 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 //	AirScintSurface->SetModel(unified);
 //	AirScintSurface->SetFinish(polished);
 //
-//	new G4LogicalBorderSurface("AirScintSurface",physScint,
-//								   physWorld,AirScintSurface);
+//	new G4LogicalSkinSurface("AirScintSurface",logicScintillator, AirScintSurface);
 
-	//
+//	//Scintillator Skin
+//    G4OpticalSurface* SiPMSkin =
+//    new G4OpticalSurface("SiPMSkin");
+//
+//    SiPMSkin->SetType(dielectric_metal);
+//    SiPMSkin->SetModel(unified);
+//    SiPMSkin->SetFinish(polished);
+//
+//    new G4LogicalSkinSurface("SiPMSkin", logicSiPM, SiPMSkin);
 
-	// SiPM - Scintillator
+	 //SiPM - Scint
 	G4OpticalSurface* SiPMScintSurface =
 	new G4OpticalSurface("SiPMScintSurface");
 
@@ -251,6 +319,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	SiPMScintSurface->SetFinish(polished);
 
 	new G4LogicalBorderSurface("SiPMScintSurface",physScint,physSiPM,SiPMScintSurface);
+
+
 
 	//------------------------------------------------------
 	// visualization attributes
@@ -265,6 +335,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	//Yellow color for SiPM
 	G4VisAttributes* Att2 = new G4VisAttributes(G4Colour(0.0, 0.0, 1.0));
 	logicSiPM->SetVisAttributes(Att2);
+
+	//color for wrapper
+	G4VisAttributes* Att3 = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0));
+	logicWrapper->SetVisAttributes(Att3);
 
 
 

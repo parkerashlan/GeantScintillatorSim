@@ -51,7 +51,7 @@ RunAction::RunAction() : G4UserRunAction()
 	  analysisManager->CreateH1("H1","Edep in Crystal", nbins, xmin*MeV, xmax*MeV);
 
 	  xmin = 0; //
-	  xmax = 2e3; //
+	  xmax = 3e6; //
 	  binsize = 2; //
 	  nbins= (int)(xmax-xmin)/binsize;
       analysisManager->CreateH1("H2","nAbsorbed Photons", nbins, xmin, xmax);
@@ -70,10 +70,10 @@ RunAction::RunAction() : G4UserRunAction()
 	  analysisManager->CreateH1("H4","Primary Energy of Particles", nbins, xmin*MeV, xmax*MeV);
 
 	  xmin = 0; //
-	  xmax = 18; //
-	  binsize = 1; //
+	  xmax = 300; //
+	  binsize = 0.5; //
 	  nbins= (int)(xmax-xmin)/binsize;
-      analysisManager->CreateH1("H4","SiPM Absorbed Photons", nbins, xmin, xmax);
+      analysisManager->CreateH1("H5","SiPM Absorbed Photons", nbins, xmin, xmax);
 
 	  // Creating ntuple
 	  //

@@ -6,4 +6,4 @@
 /gps/energy 4. GeV
 
 ## Number of events to run
-/run/beamOn 100
+/run/beamOn 1000

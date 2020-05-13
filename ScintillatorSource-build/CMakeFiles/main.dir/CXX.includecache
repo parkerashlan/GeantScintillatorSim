@@ -900,6 +900,20 @@ G4BlockingList.icc
 
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BlockingList.icc
 
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.hh
+G4DisplacedSolid.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DisplacedSolid.hh
+G4ThreeVector.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4ThreeVector.hh
+G4RotationMatrix.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4RotationMatrix.hh
+G4Transform3D.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Transform3D.hh
+G4BooleanSolid.icc
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.icc
+
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.icc
+
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BoundingEnvelope.hh
 vector
 -
@@ -1061,6 +1075,18 @@ G4VModelFactory.hh
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4VModelFactory.hh
 G4VDigi.hh
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4VDigi.hh
+
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DisplacedSolid.hh
+G4VSolid.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4VSolid.hh
+G4RotationMatrix.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4RotationMatrix.hh
+G4ThreeVector.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4ThreeVector.hh
+G4Transform3D.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Transform3D.hh
+G4AffineTransform.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AffineTransform.hh
 
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DsMesonMinus.hh
 globals.hh
@@ -1643,6 +1669,16 @@ G4LogicalBorderSurface.icc
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalBorderSurface.icc
 
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalBorderSurface.icc
+
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSkinSurface.hh
+vector
+-
+G4LogicalSurface.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSurface.hh
+G4LogicalSkinSurface.icc
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSkinSurface.icc
+
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSkinSurface.icc
 
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSurface.hh
 G4Types.hh
@@ -3315,6 +3351,20 @@ G4String.icc
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4String.icc
 
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4String.icc
+
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SubtractionSolid.hh
+G4BooleanSolid.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.hh
+G4VSolid.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4VSolid.hh
+G4RotationMatrix.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4RotationMatrix.hh
+G4ThreeVector.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4ThreeVector.hh
+G4Transform3D.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Transform3D.hh
+G4AffineTransform.hh
+/home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AffineTransform.hh
 
 /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SurfaceProperty.hh
 vector
@@ -5721,6 +5771,8 @@ DetectorConstruction.hh
 /home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/DetectorConstruction.hh
 G4Material.hh
 /home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/G4Material.hh
+G4SubtractionSolid.hh
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/G4SubtractionSolid.hh
 G4MaterialTable.hh
 /home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/G4MaterialTable.hh
 G4Element.hh
@@ -5759,6 +5811,8 @@ G4LogicalBorderSurface.hh
 /home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/G4LogicalBorderSurface.hh
 G4OpticalSurface.hh
 /home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/G4OpticalSurface.hh
+G4LogicalSkinSurface.hh
+/home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/G4LogicalSkinSurface.hh
 
 /home/ashlanparker/git-repos/GeantScintillatorSim/ScintillatorSource/src/EventAction.cc
 EventAction.hh

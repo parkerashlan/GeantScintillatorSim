@@ -381,6 +381,8 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AffineTransform.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AffineTransform.icc
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AutoLock.hh
+ /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.hh
+ /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.icc
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BoundingEnvelope.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Box.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Box.icc
@@ -389,6 +391,7 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Colour.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DataVector.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DataVector.icc
+ /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DisplacedSolid.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Element.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4ElementTable.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4ElementVector.hh
@@ -409,6 +412,8 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Log.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalBorderSurface.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalBorderSurface.icc
+ /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSkinSurface.hh
+ /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSkinSurface.icc
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSurface.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSurface.icc
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalVolume.hh
@@ -449,6 +454,7 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Sphere.icc
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4String.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4String.icc
+ /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SubtractionSolid.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SurfaceProperty.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SystemOfUnits.hh
  /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Threading.hh

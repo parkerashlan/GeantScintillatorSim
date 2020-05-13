@@ -380,6 +380,8 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/gea
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AffineTransform.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AffineTransform.icc
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4AutoLock.hh
+CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.hh
+CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BooleanSolid.icc
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4BoundingEnvelope.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Box.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Box.icc
@@ -388,6 +390,7 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/gea
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Colour.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DataVector.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DataVector.icc
+CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4DisplacedSolid.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Element.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4ElementTable.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4ElementVector.hh
@@ -408,6 +411,8 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/gea
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Log.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalBorderSurface.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalBorderSurface.icc
+CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSkinSurface.hh
+CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSkinSurface.icc
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSurface.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalSurface.icc
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4LogicalVolume.hh
@@ -448,6 +453,7 @@ CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/gea
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Sphere.icc
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4String.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4String.icc
+CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SubtractionSolid.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SurfaceProperty.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4SystemOfUnits.hh
 CMakeFiles/main.dir/src/DetectorConstruction.cc.o: /home/ashlanparker/geant4/geant4.10.06-install/include/Geant4/G4Threading.hh
