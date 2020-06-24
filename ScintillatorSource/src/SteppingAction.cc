@@ -34,19 +34,42 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 {
 	const G4String currentPhysicalName 
     = aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName();
-	
+
 	const G4String particleName
 	= aStep->GetTrack()->GetDefinition()->GetParticleName();
-	
+
+	if (currentPhysicalName == "BackSiPM") {
+
+		aStep->GetTrack()->SetTrackStatus(fStopAndKill);
+
+		}
+
 	if (currentPhysicalName == "Scintillator"){
-		
+
 		G4double EdepStep = aStep->GetTotalEnergyDeposit();
 		
 		if (EdepStep > 0.) eventAction->EdepInCrystal = eventAction->EdepInCrystal + EdepStep;
 
 
-		 if (particleName == "opticalphoton"){
+		if (particleName == "opticalphoton"){
 		 	eventAction->nAbsPhotons++;
+
+			const G4String nextvol
+			= aStep->GetTrack()->GetNextVolume()->GetName();
+
+		 	//G4cout<< "Next Volume: " << nextvol << G4endl;
+
+
+
+
+		 	if (nextvol == "SiPM") {
+		 		eventAction->nSiPMPhotons++;
+
+		 		eventAction->absTime = aStep -> GetPreStepPoint() -> GetGlobalTime();
+
+		 		aStep->GetTrack()->SetTrackStatus(fStopAndKill);
+
+		 	}
 		 	//G4cout << "nAbsPhotons : " << eventAction->nAbsPhotons << G4endl;
 		 	//eventAction->absTime = aStep -> GetPreStepPoint() -> GetGlobalTime();
 		 	//aStep->GetTrack()->SetTrackStatus(fStopAndKill);
@@ -55,16 +78,18 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 	}
 	
-	// check if the photon is absorbed in the sensitive volume
-	if (currentPhysicalName == "SiPM"){
-		const G4String ProcessName = 
-		aStep -> GetPostStepPoint() -> GetProcessDefinedStep() -> GetProcessName();
-		if (ProcessName == "OpAbsorption"){ 
+	// check if the photon hits front of SiPM (the face in contact with the scintillator)
+
+	//if (currentPhysicalName == "SiPM"){
+
+	//	eventAction->nSiPMPhotons++;
 			
-			eventAction->nSiPMPhotons++;
-			
-			eventAction->absTime = aStep -> GetPreStepPoint() -> GetGlobalTime();
-		} 
-	}
+	//	eventAction->absTime = aStep -> GetPreStepPoint() -> GetGlobalTime();
+
+
+	//	aStep->GetTrack()->SetTrackStatus(fStopAndKill);
+
+
+
 }
 

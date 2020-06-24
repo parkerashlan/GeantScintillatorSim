@@ -124,10 +124,14 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 	G4double airRefractionIndex[nEntries] = {1.0,1.0,1.0,1.0,1.0,
 			                                 1.0,1.0,1.0,1.0,1.0};
+	G4double airReflectivity[nEntries] = {0. , 0. ,0. ,0. ,0. ,
+										  0. ,0. ,0. ,0. ,0. };
+
 
 	G4MaterialPropertiesTable* airMPT = new G4MaterialPropertiesTable();
 	airMPT->AddProperty("RINDEX",photonEnergy,airRefractionIndex,
 							nEntries);
+	airMPT->AddProperty("REFLECTIVITY", photonEnergy, airReflectivity, nEntries);
 
 
 	Air->SetMaterialPropertiesTable(airMPT);
@@ -140,26 +144,36 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4double SiAbsorptionLength[nEntries] = {0.01*mm, 0.01*mm,0.01*mm,0.01*mm,0.01*mm,
 			                                 0.01*mm,0.01*mm,0.01*mm,0.01*mm,0.01*mm};
 
+	G4double SiReflectivity[nEntries] = {0. , 0. ,0. ,0. ,0. ,
+										  0. ,0. ,0. ,0. ,0. };
+
 	G4MaterialPropertiesTable* siMPT = new G4MaterialPropertiesTable();
 
 	siMPT->AddProperty("RINDEX", photonEnergy, SiRefractionIndex, nEntries);
 	siMPT->AddProperty("ABSLENGTH", photonEnergy, SiAbsorptionLength, nEntries);
+	//siMPT->AddProperty("REFLECTIVITY", photonEnergy, SiReflectivity, nEntries);
 
 	Silicon->SetMaterialPropertiesTable(siMPT);
 
 	//Wrapper
+
 	G4double TefRefractionIndex[nEntries] = {1.32,1.32,1.32,1.32,1.32,
 			 	 	 	 	 	 	 	 	 1.32,1.32,1.32,1.32,1.32};
 
 	G4double TefAbsorptionLength[nEntries] = {94*cm, 94*cm, 94*cm, 94*cm, 94*cm,
 											 94*cm, 94*cm, 94*cm, 94*cm, 94*cm};
 
+	G4double TefReflectivity[nEntries] = {0. , 0. ,0. ,0. ,0. ,
+										  0. ,0. ,0. ,0. ,0. };
+
 	G4MaterialPropertiesTable* TefMPT = new G4MaterialPropertiesTable();
 
 	TefMPT->AddProperty("RINDEX", photonEnergy, TefRefractionIndex, nEntries);
 	TefMPT->AddProperty("ABSLENGTH", photonEnergy, TefAbsorptionLength, nEntries);
+	//TefMPT->AddProperty("REFLECTIVITY", photonEnergy, TefReflectivity, nEntries);
 
 	Teflon->SetMaterialPropertiesTable(TefMPT);
+
 	//----------------------------------------------------
 	//Detector Geometry
 	//----------------------------------------------------
@@ -224,14 +238,18 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     // SiPM Detector
 
 
-    G4double SiPMHalfLength = 3*mm;
-    G4double SiPMHalfHeight = 0.5*mm;
+    G4double SiPMHalfLength = 1.5*mm;
+    G4double SiPMHalfHeight = 0.25*mm;
 
     G4Box* solidSiPM = new G4Box("SiPM", SiPMHalfLength, SiPMHalfLength, SiPMHalfHeight);
 
+    G4Box* backSiPM = new G4Box("BackSiPM", SiPMHalfLength, SiPMHalfLength, SiPMHalfHeight);
+
+    G4LogicalVolume* logicbackSiPM = new G4LogicalVolume(solidSiPM, Silicon, "BackSiPM");
+
     G4LogicalVolume* logicSiPM = new G4LogicalVolume(solidSiPM, Silicon, "SiPM");
 
-    G4ThreeVector positionSiPM = G4ThreeVector(25.3*mm, 0.*mm, 15.*mm);
+    G4ThreeVector positionSiPM = G4ThreeVector(25.5*mm, 0.*mm, 15.*mm);
 
 
 //    G4VPhysicalVolume* physSiPM = new G4PVPlacement(0,
@@ -245,13 +263,25 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     rotmSiPM.rotateY(90.*deg);
 
-    G4ThreeVector translateSiPM = G4ThreeVector(25.3*mm, 0.*mm, 15.*mm);
+    G4ThreeVector translateSiPM = G4ThreeVector(25.25*mm, 0.*mm, 15.*mm);
+
+    G4ThreeVector translatebackSiPM = G4ThreeVector(25.75*mm, 0.*mm, 15.*mm);
+
+    G4Transform3D transformbackSiPM = G4Transform3D(rotmSiPM, translatebackSiPM);
 
     G4Transform3D transformSiPM = G4Transform3D(rotmSiPM, translateSiPM);
 
     G4VPhysicalVolume* physSiPM = new G4PVPlacement(transformSiPM,             //rotation,position
                       	  	  	  	  	  	         logicSiPM,            //its logical volume
 													 "SiPM",             //its name
+													 logicWorld,             //its mother  volume
+													 false,                 //no boolean operation
+													 0,                 //copy number
+													 0);       // checking overlaps
+
+    G4VPhysicalVolume* physbackSiPM = new G4PVPlacement(transformbackSiPM,             //rotation,position
+                      	  	  	  	  	  	         logicbackSiPM,            //its logical volume
+													 "BackSiPM",             //its name
 													 logicWorld,             //its mother  volume
 													 false,                 //no boolean operation
 													 0,                 //copy number
@@ -266,8 +296,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4Box* innerWrapper = new G4Box("outerWrapper", ScintHalfLength+0.01*mm, ScintHalfLength+0.01*mm, ScintHalfHeight+0.01*mm);
     G4SubtractionSolid* WrappernoCav = new G4SubtractionSolid("WrapperNoCav", outerWrapper, innerWrapper);
 
-    G4double lenCavity = 1.5*mm;
-    G4ThreeVector tranCavity = G4ThreeVector(26.*mm, 15.*mm, 0.*mm);
+    G4double lenCavity = 2.5*mm;
+    G4ThreeVector tranCavity = G4ThreeVector(24.*mm, 15.*mm, 0.*mm);
 
     G4Box* SiPMCavity = new G4Box("SiPMCavity", lenCavity, 4.*mm, ScintHalfHeight-2);
     G4SubtractionSolid* solidWrapper = new G4SubtractionSolid("Wrapper", WrappernoCav, SiPMCavity, 0, tranCavity);
@@ -339,6 +369,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	//color for wrapper
 	G4VisAttributes* Att3 = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0));
 	logicWrapper->SetVisAttributes(Att3);
+
+	//color for back of SiPM
+	G4VisAttributes* Att4 = new G4VisAttributes(G4Colour(1.0, 1.0, 0.0));
+	logicbackSiPM->SetVisAttributes(Att4);
 
 
 

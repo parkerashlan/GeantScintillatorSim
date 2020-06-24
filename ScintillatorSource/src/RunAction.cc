@@ -70,8 +70,8 @@ RunAction::RunAction() : G4UserRunAction()
 	  analysisManager->CreateH1("H4","Primary Energy of Particles", nbins, xmin*MeV, xmax*MeV);
 
 	  xmin = 0; //
-	  xmax = 300; //
-	  binsize = 0.5; //
+	  xmax = 4500; //
+	  binsize = 40; //
 	  nbins= (int)(xmax-xmin)/binsize;
       analysisManager->CreateH1("H5","SiPM Absorbed Photons", nbins, xmin, xmax);
 
@@ -102,8 +102,10 @@ void RunAction::BeginOfRunAction(const G4Run*)
 
 	  // Open an output file
 	  //
-	  G4String fileName = "../data/Edep.root";
+	  G4String fileName = "../data/faceSiPM/PhotonCount.root";
+
 	  analysisManager->OpenFile(fileName);
+
 }
 
 void RunAction::EndOfRunAction(const G4Run*)
