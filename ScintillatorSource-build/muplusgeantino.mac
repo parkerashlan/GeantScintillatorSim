@@ -1,0 +1,9 @@
+## Particle type, position, energy...
+/gps/particle geantino
+/gps/number 1
+/gps/pos/centre  -24.9 100 0. mm
+/gps/direction 0. -1 0
+/gps/energy 4. GeV
+
+## Number of events to run
+/run/beamOn 500
