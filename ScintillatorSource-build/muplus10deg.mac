@@ -1,0 +1,9 @@
+## Particle type, position, energy...
+/gps/particle mu+
+/gps/number 1
+/gps/pos/centre  0 9.85 1.76 cm
+/gps/direction 0. -9.85 -1.76
+/gps/energy 4. GeV
+
+## Number of events to run
+/run/beamOn 1000
