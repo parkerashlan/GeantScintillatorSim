@@ -20,7 +20,7 @@ Materials:
 
 Particle Data:
 * Cosmic Rays = Muons
-* Muon Energy = Varies but usually 4 GeV
+* Muon Energy = 4-10 GeV
 
 Particles are shot from 10 cm away from the puck.
 
